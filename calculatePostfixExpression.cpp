@@ -25,56 +25,59 @@ using namespace std;
 //To easily convert a numeric string to an int you may use the stoi() function
 //which takes a string as a parameter and returns a string
 bool isOperator(string);
-int getPrecedence(string);
+int returnOperator(int,int,string);
 int calculatePostfixExpression(string expression[], int length)
 {
     if(length < 3)
     {
         return 0;
     }
-    int returnVal = 0;
+    
     int op1,op2;
     stack<string> shtack;
-    
+    string bot;
     for(int i = 0; i < length; i++)
     {
-        if(isOperator(expression[i]))//Checks if a value in the expression is an operator
+        shtack.push(expression[i]);
+        if(!isOperator(expression[i]))
         {
-            shtack.push(expression[i]);
+            op1 = stoi(shtack.top());
+            shtack.pop();
+            op2 = stoi(shtack.top());
+            shtack.pop();
         }
-
-        if(stoi(expression[i]) <= 9 && stoi(expression[i]) >= 0) 
-        {
-            op1 = stoi(expression[i]);
-            if(i < length-1)
-            {
-                op2 = stoi(expression[1+i]);
-            }
-            
-        }
-
-
-    }
-        if(shtack.top() == "+")
-        {
-            return op1 + op2;
-        }
-        else if(shtack.top() == "-")
-        {
-            return op2 - op1;
-        }
-        else if(shtack.top() == "*")
-        {
-            return op1 * op2;
-        }
-        else if(shtack.top() == "/")
-        {
-            if(op1!=0)
-            return op2/op1;
+        else{
+          bot = shtack.top();
+          shtack.pop();
         }
         
+
+    }
+    
+    return returnOperator(op1,op2,bot);
 }
 bool isOperator(string c) //Checks if infix expression is an operator
 {
     return (c == "+" || c == "-" || c == "/" || c == "*" || c == "%");
 }
+int returnOperator(int a, int b, string val)
+{
+    if(val == "+")
+    {
+        return a + b;
+    }
+    else if(val == "-")
+    {
+        return a - b;
+    }
+    else if(val == "/")
+    {
+        return a/b;
+    }
+    else if(val == "*")
+    {
+        return a*b;
+    }
+    return 0;
+}
+
