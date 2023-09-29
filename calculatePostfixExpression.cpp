@@ -54,7 +54,6 @@ int calculatePostfixExpression(string expression[], int length) {
     }
 
     if (shtack.size() != 1) {
-        cerr << "Error: Invalid expression or operators left on the stack" << endl;
         return 0; // Invalid expression or operators left on the stack
     }
 
@@ -72,7 +71,6 @@ int returnOperator(int a, int b, string val) {
         return a - b;
     } else if (val == "/") {
         if (b == 0) {
-            cerr << "Error: Division by zero" << endl;
             return 0; // Division by zero error
         }
         return a / b;
@@ -80,11 +78,9 @@ int returnOperator(int a, int b, string val) {
         return a * b;
     } else if (val == "%") {
         if (b == 0) {
-            cerr << "Error: Modulo by zero" << endl;
             return 0; // Modulo by zero error
         }
         return a % b;
     }
-    cerr << "Error: Invalid operator: " << val << endl;
     return 0; // Invalid operator error
 }
